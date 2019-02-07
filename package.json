@@ -4,6 +4,8 @@
     "description": "Syntax highlighting for HaDes Assembler",
     "version": "0.0.1",
     "publisher": "piroX",
+    "license": "MIT",
+	"icon": "logo.png",
     "engines": {
         "vscode": "^1.30.0"
     },
@@ -11,6 +13,15 @@
         "Programming Languages",
         "Snippets"
     ],
+    "keywords": [
+		"asm",
+        "assembler",
+        "assembly",
+		"hades",
+        "has"
+    ],
+    "preview": false,
+    "homepage": "https://github.com/Pbc69/HaDes-Assembler-Syntax-Highlight",
     "contributes": {
         "languages": [{
             "id": "has",
