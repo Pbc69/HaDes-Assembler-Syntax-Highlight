@@ -1,0 +1,68 @@
+{
+    "Code": {
+        "prefix": "@code",
+        "body": [
+            "@code ${1:name} {",
+            "\t$0",
+            "\t",
+            "\tjreg @ra",
+            "@}"
+        ],
+        "description": "Code Template"
+    }, 
+    "Code CtxSave": {
+        "prefix": "@code ctx_save",
+        "body": [
+            "@code ${1:name} {",
+            "\t@call ctx_save",
+            "\t",
+            "\t$0",
+            "\t",
+            "\t@call ctx_restore",
+            "\tjreg @ra",
+            "@}"
+        ],
+        "description": "Code Template"
+    }, 
+    "Macro": {
+        "prefix": "@mac",
+        "body": [
+            "@mac ${1:name} {",
+            "\t$0",
+            "@}"
+        ],
+        "description": "Macro Template"
+    },
+    "Init Function": {
+        "prefix": "@code __init",
+        "body": [
+            "@code __init {",
+            "\tdpma                       ; disable program-memory access",
+	        "\tdei                        ; disable interrupts",
+            "",
+            "\tldui @sp, #2048            ; init stack-pointer",
+            "                             ; init interrupt handling here",
+            "\teni",
+            "",
+            "loop:",
+            "\t$0                         ; do stuff",
+            "\tjmp #loop",
+            "@}"
+        ],
+        "description": "__Init function"
+    },
+    "mnem-load-global": {
+        "prefix": "load global",
+        "body": [
+            "load ${1:r1}, r0, ${2:*d*var}"
+        ],
+        "description": "Load var content in r1"
+    },
+    "mnem-jal": {
+        "prefix": "jal",
+        "body": [
+            "jal ${1:@ra}, *${2:func}"
+        ],
+        "description": "Jump and link @ra"
+    }
+}

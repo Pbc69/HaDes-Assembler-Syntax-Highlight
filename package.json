@@ -1,0 +1,36 @@
+{
+    "name": "hades-assembler",
+    "displayName": "HaDes Assembler",
+    "description": "Syntax highlighting for HaDes Assembler",
+    "version": "0.0.1",
+    "publisher": "piroX",
+    "engines": {
+        "vscode": "^1.30.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Snippets"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "has",
+            "aliases": ["HaDes Assembler", "has"],
+            "extensions": [".has"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "has",
+            "scopeName": "source.has",
+            "path": "./syntaxes/has.tmLanguage.json"
+        }],
+        "snippets": [{
+            "language": "has",
+            "path": "./snippets/snippets.json"
+        }]
+    },
+	"repository": {
+		"url": "https://github.com/Pbc69/HaDes-Assembler-Syntax-Highlight",
+		"type": "git"
+	}
+}
+

@@ -1,0 +1,249 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "HaDes Assembler",
+	"scopeName": "source.has",
+	"patterns": [ 
+		{"include": "#comments"},
+		{"include": "#globals"},
+		{"include": "#macros"},
+		{"include": "#function"},
+		{"include": "#illegal"}
+	],
+	"repository": {
+		"globals": {
+			"patterns" : [
+				{
+					"begin" : "(?i)(@data)\\s+?([_a-z]+[a-z_\\-0-9]*)?\\s*(\\{)?",
+					"beginCaptures" : {
+						"1" : { "name" : "keyword.variable.global.has" },
+						"2" : {	"name" : "variable.global.has" },
+						"3" : {	"name" : "punctuation.paren.open.has" }
+					},
+					"patterns" : [
+						{"include": "#strings"},
+						{"include": "#numeric"},
+						{
+							"name": "support.other.comma.has",
+							"match": ","
+						},
+						{"include": "#comments"},
+						{"include": "#illegal"}
+					],
+					"end" : "@\\}",
+					"endCaptures" : {
+						"0" : {
+						"name" : "punctuation.paren.close.has"
+						}
+					}
+				},
+				{ 
+					"match": "(?i)(@def)\\s+?([_a-z]+[a-z_\\-0-9]*)?\\s*(.*)",
+					"captures": {
+						"1": { "name": "keyword.def.global.has" },
+						"2": { "name": "variable.def.global.has" },
+						"3": { "patterns": [ {"include":"#strings"}, {"include":"#comments"}, {"include": "#illegal"}] }
+					}
+				},
+				{ 
+					"match": "(?i)(@inc)\\s+(.*)",
+					"captures": {
+						"1": { "name": "keyword.include.has" },
+						"2": { "patterns": [ {"include":"#strings"}, {"include":"#comments"}, {"include": "#illegal"}] }
+					}
+				}
+			]
+		},
+		"macros": {
+			"begin" : "(?i)(@mac)\\s+?([_a-z]+[a-z0-9_\\-]*)?\\s*(\\{)?",
+			"beginCaptures" : {
+				"1" : { "name" : "keyword.has" },
+				"2" : {	"name" : "entity.name.method.has" },
+				"3" : {	"name" : "punctuation.paren.open.has" }
+			},
+			"patterns" : [
+				{"include": "#mnemonics"},
+				{"include": "#strings"},
+				{"include": "#numeric"},
+				{"include": "#comments"},
+				{
+					"name": "variable.parameter.has",
+					"match": "@[0-9]+"
+				}, 
+				{
+					"name": "variable.local.has",
+					"match": "@(?i)([a-z_]+[a-z0-9_])"
+				},
+				{"include": "#ref-global-var"},
+				{"include": "#illegal"}
+			],
+			"end" : "@\\}",
+			"endCaptures" : {
+				"0" : {
+				"name" : "punctuation.paren.close.has"
+				}
+			}
+		},
+		"ref-global-var": {
+			"patterns" : [
+				{ 
+					"match": "(?i)\\*(d)\\*([_a-z]+[a-z0-9_]*)?",
+					"captures": {
+						"1": { "name": "keyword.has" },
+						"2": { 
+							"name": "variable.global.has"
+						}
+					}
+				},
+				{"include": "#illegal"}
+			]
+		},
+		"function": {
+			"begin" : "(?i)(@code)\\s+?([_a-zA-Z]+[a-zA-Z0-9_\\-]*)?\\s*(\\{)?",
+			"beginCaptures" : {
+				"1" : { "name" : "keyword.has" },
+				"2" : {	"name" : "entity.name.method.has" },
+				"3" : {	"name" : "punctuation.paren.open.has" }
+			},
+			"patterns" : [
+				{"include": "#mnemonics"},
+				{"include": "#strings"},
+				{"include": "#numeric"},
+				{"include": "#comments"},
+				{
+					"name": "variable.local.has",
+					"match": "@(?i)[0-9a-z_]+"
+				},
+				{"include": "#ref-global-var"},
+				{"include": "#illegal"}
+			],
+			"end" : "@\\}",
+			"endCaptures" : {
+				"0" : {
+					"name" : "punctuation.paren.close.has"
+				}
+			}
+		},
+		"mnemonics": {
+			"patterns": [
+				{
+					"name": "keyword.has",
+					"match": "(?i)\\b(nop|addi|subi|muli|andi|ori|xori|xnori|shli|cshli|shri|cshri|add|sub|mul|and|or|xor|xnor|shl|cshl|shr|cshr|getov|setov|setovi|seqi|snei|slti|sgti|slei|sgei|seq|sne|slt|sgt|sle|sge|beqz|bnez|bov|jmp|jal|jreg|load|store|dpma|epma|in|out|eni|dei|sisa|reti|swi|getswi|ldi|ldui|mov|inc|dec|ld)\\b"
+				},
+				{
+					"name": "entity.name.function.has",
+					"match" : "(?i)(@call)\\s+?([_a-zA-Z]+[a-zA-Z0-9_\\-]*)?",
+					"captures": {
+						"1": { "name": "entity.name.function.call.has" },
+						"2": {"name": "support.function.call.has" }
+					}
+				},
+				{ 
+					"match": "(?i)(@ldef)\\s+?([_a-z]+[a-z_\\-0-9]*)?\\s*(.*)",
+					"captures": {
+						"1": { "name": "entity.name.function.has" },
+						"2": { "name": "variable.def.local.has" },
+						"3": { "patterns": [ {"include":"#strings"}, {"include":"#comments"}, {"include": "#illegal"}] }
+					}
+				},
+				{
+					"name": "string.jump.entry.has",
+					"match": "\\b(?i)([a-z]+[a-z0-9_]*)\\b:"
+				},
+				{
+					"name": "string.jump.to.has",
+					"match": "(?i)#([a-z]+[a-z0-9_]*)"
+				}, 
+				{
+					"match": "(?i),\\s*(\\*)((?!d\\s*\\*)[a-z_]+[a-z_0-9]*)",
+					"captures": {
+						"1": { "name": "keyword.has" },
+						"2": { 
+							"name": "entity.name.selector.global.has"
+						}
+					},
+					"comment" : "*function but not *d*globalvar"
+				},
+				{
+					"match": "(?i)(r[0-7])\\s*?(,)?",
+					"captures": {
+						"1": { "name": "entity.name.register.has" },
+						"2": { "name": "support.other.comma.has" }
+					}
+				},
+				{
+					"name": "support.other.comma.has",
+					"match": ","
+				}
+				
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.has",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.has",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.has",
+					"match": "(;.*)"
+				},
+				{
+					"name": "comment.block.has",
+					"begin": "/\\*",
+					"end": "\\*/",
+					"patterns": [
+						{
+							"name": "constant.character.escape.has",
+							"match": "\\\\."
+						}
+					]
+				}
+			]
+		},
+		"numeric": {
+			"patterns": [
+				{
+					"match" : "(?i)(#0x([0-9]|[a-f]){1,8})",
+					"name" : "constant.numeric.hex.has",
+					"comment": "#x23FaE"
+				},
+				{
+					"match" : "(?i)(#([0-9]|[a-f]){1,8}h)",
+					"name" : "constant.numeric.hex.has",
+					"comment": "#02fh"
+				},			
+				{
+					"match" : "(?i)(#0b[0-1]{1,32})",
+					"name" : "constant.numeric.binary.has",
+					"comment": "#0b10101"
+				},
+				{
+					"match" : "(?i)(#[0-1]{1,32}b)",
+					"name" : "constant.numeric.binary.has",
+					"comment": "#10101b"
+				},			
+				{
+					"match" : "(?i)(#-?\\d+)",
+					"name" : "constant.numeric.decimal.has",
+					"comment": "#23 or #-13"
+				}
+
+			]
+		},
+		"illegal": {
+			"patterns": [
+				{
+					"match" : "([^\\s])",
+					"name" : "entity.other.illegal.unused.has"
+				}
+			]
+		}
+	}
+}
