@@ -5,8 +5,9 @@ Syntax highlighting for the HaDes assembler makes it much easier to code your ow
 ## Features
 
 * Syntax highlight for everything
+* Syntax highlight only if used in correct case, but no error highlighting
 * Brace matching
-* Code snippets
+* Some code snippets
 
 ## Change log
 
