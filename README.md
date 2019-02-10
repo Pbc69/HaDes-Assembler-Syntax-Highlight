@@ -2,6 +2,7 @@
 
 Syntax highlighting for the HaDes assembler makes it much easier to code your own small assembler program.
 
+
 ## Features
 
 * Syntax highlight for everything
@@ -9,10 +10,9 @@ Syntax highlighting for the HaDes assembler makes it much easier to code your ow
 * Brace matching
 * Some code snippets
 
-## Change log
 
-See changelog.md
+![HaDes Synatx Highlight Example](example.png "HaDes Synatx Highlight Example")
+
 
 ## License
-
 This extension is licensed under the MIT License. Please see the third-party notices file for details on the third-party binaries that we include with releases of this project.
