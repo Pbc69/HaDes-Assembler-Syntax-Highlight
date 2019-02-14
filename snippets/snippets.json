@@ -56,7 +56,7 @@
         "body": [
             "load ${1:r1}, r0, ${2:*d*var}"
         ],
-        "description": "Load var content in r1"
+        "description": "r1 = [address]"
     },
     "mnem-jal": {
         "prefix": "jal",
@@ -64,5 +64,10 @@
             "jal ${1:@ra}, *${2:func}"
         ],
         "description": "Jump and link @ra"
+    },
+    "mnem-add": {
+        "prefix": "add",
+        "body": [ "add ${1:@w}, ${2:@a}, ${3:@b}" ],
+        "description": "w = a+b"
     }
 }

@@ -192,7 +192,7 @@
 			"patterns": [
 				{
 					"name": "comment.line.has",
-					"match": "(;.*)"
+					"match": "(;.*)|(//.*)"
 				},
 				{
 					"name": "comment.block.has",
